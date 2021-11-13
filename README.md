@@ -12,7 +12,6 @@ Payloads from this repository are provided for educational purposes only. Users 
 
 ## Circuit diagram
 
-![alt text](https://github.com/nalindaDJ/Arduino-Rubber-Ducky/blob/main/diagram.png?raw=true)
-![alt text](https://github.com/nalindaDJ/Arduino-Rubber-Ducky/blob/main/prototype.jpg?raw=true)
+![alt text](https://github.com/nalindaDJ/Arduino-Rubber-Ducky/blob/main/attiny85-rubber-ducky.jpg?raw=true)
 
 Additonal readings : Adding Bootloader using Arduino [Digispark](https://digistump.com/wiki/digispark/tutorials/connecting).
