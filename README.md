@@ -9,3 +9,7 @@ Generally, payloads may execute commands on your device. As such, it is possible
 ## Legal
 
 Payloads from this repository are provided for educational purposes only. Users are solely responsible for compliance with all laws of their locality. I personally claim no responsibility for unauthorized or unlawful use.
+
+## Circuit diagram
+
+![alt text](https://github.com/nalindaDJ/Arduino-Rubber-Ducky/blob/main/diagram.png?raw=true)
